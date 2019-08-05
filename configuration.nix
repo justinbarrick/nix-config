@@ -55,6 +55,9 @@ in {
     programs.rofi = {
       enable = true;
       location = "top";
+      theme = "lb";
+      borderWidth = 0;
+      font = "DejaVu Sans Mono 8";
     };
 
     programs.git = {
@@ -151,6 +154,11 @@ in {
         color15 = "#BEBEC1";
       };
 
+    };
+
+    services.compton = {
+      enable = true;
+      menuOpacity = "0.8";
     };
 
     services.random-background = {
