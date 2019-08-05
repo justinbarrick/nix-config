@@ -47,6 +47,7 @@ in {
     };
 
     home.keyboard.layout = "${layout}";
+    home.file.".backgrounds/net.jpg".source = ./net.jpg;
 
     programs.git = {
       enable = true;
@@ -142,6 +143,11 @@ in {
         color15 = "#BEBEC1";
       };
 
+    };
+
+    services.random-background = {
+      enable = true;
+      imageDirectory = "%h/.backgrounds";
     };
 
     services.polybar = {
@@ -369,6 +375,7 @@ in {
       extraConfig = ''
         set $mod Mod4
         exec firefox
+        exec --no-startup-id i3-msg workspace 1
       '';
 
       config = {
@@ -386,6 +393,10 @@ in {
             command = "border none";
             criteria = { class = "^.*$"; };
           }
+        ];
+
+        startup = [
+          { command = "systemctl --user restart polybar"; always = true; notification = false; }
         ];
 
         keybindings = let
@@ -455,6 +466,10 @@ in {
     enable = true;
     layout = "${layout}";
     libinput.enable = true;
+    displayManager.auto = {
+      enable = true;
+      user = "justin";
+    };
   };
 
   boot = {
