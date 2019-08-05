@@ -55,7 +55,7 @@ in {
     programs.rofi = {
       enable = true;
       location = "top";
-      theme = "lb";
+      theme = "Paper";
       borderWidth = 0;
       font = "DejaVu Sans Mono 8";
     };
