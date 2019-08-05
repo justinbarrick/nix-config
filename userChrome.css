@@ -1,0 +1,40 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"); /* only needed once */
+
+#autohide-context {
+  display:none!important;
+}
+#back-button, #forward-button, #nav-bar-overflow-button, .titlebar-placeholder  {
+  display:none !important;
+}
+#urlbar, #PanelUI-button, #urlbar:hover {
+  border: none !important;
+  box-shadow: none !important;
+  background: none !important;
+}
+#PanelUI-menu-button, .urlbar-history-dropmarker, .tab-close-button {
+  opacity:0;
+}
+#urlbar {
+  font-size:1.15em;
+  filter: grayscale(100%);
+}
+.tab-content {
+  filter: grayscale(100%);
+}
+#urlbar[pageproxystate="valid"] > #identity-box.verifiedIdentity > #identity-icon-label {
+  color: #B1CBBA !important;
+}
+#pageActionButton {
+  display: none !important;
+}
+#urlbar, #navigatortoolbox, .tabbrowser-tab {
+  font-family: SF Mono, deja-vu-sans, Deja Vu Sans, DejaVu Sans !important;
+  letter-spacing: 0px;
+  font-size: 0.7em;
+}
+#TabsToolbar .tabbrowser-tab .tab-line {
+  display: none !important;
+}
+#TabsToolbar, #titlebar {
+  -moz-appearance: -moz-mac-vibrancy-dark !important;
+}

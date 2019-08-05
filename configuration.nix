@@ -52,6 +52,14 @@ in {
     home.keyboard.layout = "${layout}";
     home.file.".backgrounds/net.jpg".source = ./net.jpg;
 
+    programs.firefox = {
+      enable = true;
+      profiles."default" = {
+        isDefault = true;
+        userChrome = builtins.readFile ./userChrome.css;
+      };
+    };
+
     programs.rofi = {
       enable = true;
       location = "top";
