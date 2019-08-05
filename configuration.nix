@@ -9,7 +9,7 @@ let
   };
   layout = "dvorak";
   timezone = "America/Los_Angeles";
-  packages = with pkgs; [ firefox kubectl ];
+  packages = with pkgs; [ firefox kubectl qrencode zbar gnupg ];
 in {
   imports = [
     ./hardware-configuration.nix
@@ -26,7 +26,10 @@ in {
 
   environment = {
     systemPackages = with pkgs; [
-      curl vim git pass dmenu i3lock
+      (pass.withExtensions (exts: [ exts.pass-otp ]))
+      curl vim git dmenu i3lock xdotool (rofi-pass.overrideAttrs (attrs: {
+        fixupPhase = "";
+      }))
     ] ++ packages;
   };
 
@@ -48,6 +51,11 @@ in {
 
     home.keyboard.layout = "${layout}";
     home.file.".backgrounds/net.jpg".source = ./net.jpg;
+
+    programs.rofi = {
+      enable = true;
+      location = "top";
+    };
 
     programs.git = {
       enable = true;
@@ -452,6 +460,8 @@ in {
 
           "${modifier}+l" = "exec i3lock -c 000000 -f";
           "${modifier}+Shift+l" = "exec systemctl hibernate";
+
+          "${modifier}+ctrl+space" = "exec rofi-pass";
         };
       };
     };
