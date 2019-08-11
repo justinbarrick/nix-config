@@ -10,7 +10,7 @@ let
   };
   layout = "dvorak";
   timezone = "America/Los_Angeles";
-  packages = with pkgs; [ firefox kubernetes-helm kubectl qrencode zbar gnupg jq tcpdump openssl tree ];
+  packages = with pkgs; [ firefox kubernetes-helm kubectl qrencode zbar gnupg jq tcpdump openssl tree gcc libffi google-cloud-sdk terraform_0_12 ansible unzip ];
   my-python-packages = python-packages: with python-packages; [
     setuptools
     virtualenvwrapper
@@ -30,7 +30,7 @@ in {
     };
     extraHosts = ''
       192.168.1.240 unifi.home
-      192.168.1.242 httpbin.home ca.home
+      192.168.1.241 ca.home hass.home netdata.home
     '';
   };
 
