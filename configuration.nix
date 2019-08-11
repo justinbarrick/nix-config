@@ -1,5 +1,6 @@
 { config, pkgs, ... }:
 
+with pkgs;
 let
   hostname = "box";
   user = "justin";
@@ -9,7 +10,12 @@ let
   };
   layout = "dvorak";
   timezone = "America/Los_Angeles";
-  packages = with pkgs; [ firefox kubectl qrencode zbar gnupg ];
+  packages = with pkgs; [ firefox kubernetes-helm kubectl qrencode zbar gnupg jq tcpdump openssl tree ];
+  my-python-packages = python-packages: with python-packages; [
+    setuptools
+    virtualenvwrapper
+  ]; 
+  python-with-my-packages = python3.withPackages my-python-packages;
 in {
   imports = [
     ./hardware-configuration.nix
@@ -22,6 +28,10 @@ in {
       enable = true;
       networks = (import ./networks.nix);
     };
+    extraHosts = ''
+      192.168.1.240 unifi.home
+      192.168.1.242 httpbin.home ca.home
+    '';
   };
 
   environment = {
@@ -29,7 +39,7 @@ in {
       (pass.withExtensions (exts: [ exts.pass-otp ]))
       curl vim git dmenu i3lock xdotool (rofi-pass.overrideAttrs (attrs: {
         fixupPhase = "";
-      }))
+      })) python-with-my-packages
     ] ++ packages;
   };
 
