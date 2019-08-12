@@ -10,7 +10,7 @@ let
   };
   layout = "dvorak";
   timezone = "America/Los_Angeles";
-  packages = with pkgs; [ firefox kubernetes-helm kubectl qrencode zbar gnupg jq tcpdump openssl tree gcc libffi google-cloud-sdk terraform_0_12 ansible unzip ];
+  packages = with pkgs; [ firefox kubernetes-helm kubectl qrencode zbar gnupg jq tcpdump openssl tree gcc libffi google-cloud-sdk terraform_0_12 ansible unzip acpi dnsutils ];
   my-python-packages = python-packages: with python-packages; [
     setuptools
     virtualenvwrapper
@@ -22,16 +22,36 @@ in {
     "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
   ];
 
+  security.pki.certificates = [
+    ''
+      -----BEGIN CERTIFICATE-----
+      MIIDDTCCAfWgAwIBAgIJANC9wTvYu6CRMA0GCSqGSIb3DQEBCwUAMB0xGzAZBgNV
+      BAMMEm1lZ2FmcnVpdCBwYXJhZGlzZTAeFw0xOTA4MTAyMzU1NTNaFw0yOTA4MDcy
+      MzU1NTNaMB0xGzAZBgNVBAMMEm1lZ2FmcnVpdCBwYXJhZGlzZTCCASIwDQYJKoZI
+      hvcNAQEBBQADggEPADCCAQoCggEBANurNbfVKcpwrUFsHGeen/bSzpfST69o27NA
+      0X0plhmQtOsxlO12Y4S8VkkRFED2YseU2JplbaNUs9znudPOcgevYHVeZdRV5j+6
+      KvWzJ9JN2kefJl2uAC8fpU40nfZb3pwG17hkBsHF1vG4/a4VYQkYbNIvnwwcxN7q
+      SGj4BhaJ5K8tDsvwiql3s7M74WZlu2ToG2IFFlmHelScGzW/2/sZ5Ev916FEpRbS
+      RDFpXLWFYOS60z8zclMjUJPakIaGHI+Q66yqBb9B7xK2QTjzS8sd0DFNfKk/d4O6
+      jIb7LQx3aSm2ihB+SBFcqLxROrHou2uucRS70yctZlHj3RXa3jMCAwEAAaNQME4w
+      HQYDVR0OBBYEFMSGbnHoTxJJak2E1xvlvfDZuphhMB8GA1UdIwQYMBaAFMSGbnHo
+      TxJJak2E1xvlvfDZuphhMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEB
+      AJE+SS//dEecD4eQJCF7fVsNhh4ykqjgn2N8KUrqzso6tWdMhuq8TM9cd9OH0egs
+      fvxhUppkFGYwBdMdKHmH8Q9/Eqs5mDZEZDVYg0bo5aJMQtMFDdhkdfyG/vqBNC+X
+      eilnXCkVQ37NZKE/m7u0f3ssoQA/dIIKn8GdMDg7kMAcN0wfWuiTBDALyQus+cgz
+      Ch9uBRMRRLGFpuxL6dnqTi1tifuQHm0Fg3Kq9lm8ZhYJkurytELa4DqlaX+V+oq/
+      XUXuL6+/Zq7OASYH8k6G8MDZWrdDoslXouJebS4UDHAguUQPARGBfzgbCThgA5ZR
+      ejwgv2gpyz+MyS8Azla0mvg=
+      -----END CERTIFICATE-----
+    ''
+  ];
+
   networking = {
     hostName = hostname;
     wireless = {
       enable = true;
       networks = (import ./networks.nix);
     };
-    extraHosts = ''
-      192.168.1.240 unifi.home
-      192.168.1.241 ca.home hass.home netdata.home
-    '';
   };
 
   environment = {
