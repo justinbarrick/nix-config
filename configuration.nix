@@ -47,6 +47,7 @@ in {
   ];
 
   networking = {
+    search = [ "home" ];
     hostName = hostname;
     wireless = {
       enable = true;
