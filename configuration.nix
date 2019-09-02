@@ -10,7 +10,7 @@ let
   };
   layout = "dvorak";
   timezone = "America/Los_Angeles";
-  packages = with pkgs; [ firefox kubernetes-helm kubectl qrencode zbar gnupg jq tcpdump openssl tree gcc libffi google-cloud-sdk terraform_0_12 ansible unzip acpi dnsutils ];
+  packages = with pkgs; [ chromium kubernetes-helm kubectl qrencode zbar gnupg jq tcpdump openssl tree gcc libffi google-cloud-sdk terraform_0_12 ansible unzip acpi dnsutils go_1_12 nodejs-11_x scrot ];
   my-python-packages = python-packages: with python-packages; [
     setuptools
     virtualenvwrapper
