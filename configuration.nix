@@ -10,7 +10,7 @@ let
   };
   layout = "dvorak";
   timezone = "America/Los_Angeles";
-  packages = with pkgs; [ chromium kubernetes-helm kubectl qrencode zbar gnupg jq tcpdump openssl tree gcc libffi google-cloud-sdk terraform_0_12 ansible unzip acpi dnsutils go_1_12 nodejs-11_x scrot ];
+  packages = with pkgs; [ chromium kubernetes-helm kubectl qrencode zbar gnupg jq tcpdump openssl tree gcc libffi google-cloud-sdk terraform_0_12 ansible unzip acpi dnsutils go_1_12 nodejs-11_x scrot gnumake ];
   my-python-packages = python-packages: with python-packages; [
     setuptools
     virtualenvwrapper
@@ -19,7 +19,7 @@ let
 in {
   imports = [
     ./hardware-configuration.nix
-    "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
+    <home-manager/nixos>
   ];
 
   security.pki.certificates = [
@@ -107,7 +107,7 @@ in {
 
     programs.vim = {
       enable = true;
-      plugins = [ "vim-nix" ];
+      plugins = [ vim-nix ];
 
       settings = {
         background = "dark";
@@ -123,7 +123,6 @@ in {
 
         set list
         set pastetoggle=<F10>
-        set smartindent
 
         inoremap {       {}<Left>
         inoremap {<CR>   {<CR>}<Esc>O
