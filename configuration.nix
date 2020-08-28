@@ -10,7 +10,7 @@ let
   };
   layout = "dvorak";
   timezone = "America/Los_Angeles";
-  packages = with pkgs; [ chromium kubernetes-helm kubectl qrencode zbar gnupg jq tcpdump openssl tree gcc libffi google-cloud-sdk terraform_0_12 ansible unzip acpi dnsutils go_1_12 nodejs-11_x scrot gnumake ];
+  packages = with pkgs; [ chromium kubernetes-helm kubectl qrencode zbar gnupg jq tcpdump openssl tree gcc libffi google-cloud-sdk terraform_0_12 ansible unzip acpi dnsutils go_1_12 scrot gnumake ];
   my-python-packages = python-packages: with python-packages; [
     setuptools
     virtualenvwrapper
@@ -19,7 +19,7 @@ let
 in {
   imports = [
     ./hardware-configuration.nix
-    <home-manager/nixos>
+    (import "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos")
   ];
 
   security.pki.certificates = [
@@ -107,7 +107,6 @@ in {
 
     programs.vim = {
       enable = true;
-      plugins = [ vim-nix ];
 
       settings = {
         background = "dark";
@@ -194,7 +193,7 @@ in {
 
     };
 
-    services.compton = {
+    services.picom = {
       enable = true;
       menuOpacity = "0.8";
     };
@@ -215,7 +214,7 @@ in {
 
       config = {
         "bar/top" = {
-          "monitor" = "LVDS-1";
+          "monitor" = "eDP-1";
           "width" = "100%";
           "height" = 34;
 
@@ -522,11 +521,9 @@ in {
     enable = true;
     layout = "${layout}";
     libinput.enable = true;
-    displayManager.auto = {
-      enable = true;
-      user = "justin";
-    };
   };
+
+  services.logind.lidSwitch = "hibernate";
 
   boot = {
     loader = {
@@ -534,19 +531,19 @@ in {
       efi.canTouchEfiVariables = true;
     };
 
-    initrd.luks.devices = [
-      {
-        name = "root";
-        device = "/dev/sda2";
+    initrd.luks.devices = {
+      "root" = {
+        device = "/dev/nvme0n1p1";
         preLVM = true;
         allowDiscards = true;
-      }
-    ];
+      };
+    };
   };
 
+  console.font = "Lat2-Terminus16";
+  console.keyMap = "${layout}";
+
   i18n = {
-    consoleFont = "Lat2-Terminus16";
-    consoleKeyMap = "${layout}";
     defaultLocale = "en_US.UTF-8";
   };
 
